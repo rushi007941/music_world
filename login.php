@@ -7,10 +7,14 @@
 
       $myusername = mysqli_real_escape_string($db,$_POST['username']);
       $mypassword = mysqli_real_escape_string($db,$_POST['password']);
-
-      $sql = "SELECT * FROM silog WHERE username = '$myusername' and passcode = '$mypassword'";
+      echo "$myusername";
+      echo "$mypassword";
+      $sql = "SELECT * FROM silog WHERE username = '$myusername' and password = '$mypassword'";
       $result = mysqli_query($db,$sql);
-      $row = mysql_fetch_array($result,MYSQL_ASSOC);
+      if (!$result)
+       { echo "ErrorException"; // add this check. die('Invalid query: ' . mysql_error());
+        }
+      $row = mysqli_fetch_array($result,MYSQLI_BOTH);
       $active = $row['active'];
 
       $count = mysql_num_rows($result);
