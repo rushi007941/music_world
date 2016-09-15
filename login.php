@@ -7,15 +7,15 @@
 
       $myusername = mysqli_real_escape_string($db,$_POST['username']);
       $mypassword = mysqli_real_escape_string($db,$_POST['password']);
-      echo "$myusername";
+      echo "$myusername"."<br>";
       echo "$mypassword";
-      $sql = "SELECT * FROM silog WHERE username = '$myusername' and password = '$mypassword'";
+      $sql = "SELECT id FROM silog WHERE username = '$myusername' AND password = '$mypassword'";
       $result = mysqli_query($db,$sql);
       if (!$result)
        { echo "ErrorException"; // add this check. die('Invalid query: ' . mysql_error());
         }
       $row = mysqli_fetch_array($result,MYSQLI_BOTH);
-      $active = $row['active'];
+      $active = $row(1);
 
       $count = mysql_num_rows($result);
 
