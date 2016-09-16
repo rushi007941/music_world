@@ -7,27 +7,29 @@
 
       $myusername = mysqli_real_escape_string($db,$_POST['username']);
       $mypassword = mysqli_real_escape_string($db,$_POST['password']);
-      echo "$myusername"."<br>";
-      echo "$mypassword";
+
       $sql = "SELECT id FROM silog WHERE username = '$myusername' AND password = '$mypassword'";
       $result = mysqli_query($db,$sql);
       if (!$result)
        { echo "ErrorException"; // add this check. die('Invalid query: ' . mysql_error());
         }
-      $row = mysqli_fetch_array($result,MYSQLI_BOTH);
-      $active = $row(1);
+      $row = mysqli_fetch_array($result);
+      print_r( $row );
+      //$active = $row('active');
 
-      $count = mysql_num_rows($result);
+      //$count = mysql_num_rows($result);
+      $count = $result->num_rows;
+
 
       // If result matched $myusername and $mypassword, table row must be 1 row
 
       if($count == 1) {
-         session_register("myusername");
-         $_SESSION['login_user'] = $myusername;
 
+         $_SESSION['login_user'] = $myusername;
+         echo("inside");
          header("location: welcome.php");
       }else {
-         $error = "Your Login Name or Password is invalid";
+         echo "Your Login Name or Password is invalid";
       }
    }
 ?>
